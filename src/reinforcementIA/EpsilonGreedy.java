@@ -11,12 +11,13 @@ public class EpsilonGreedy {
     private final int numActions; // Number of possible actions
     public final double[] avgRewards; // Average reward for each action
     public final int[] actionCounts; // Number of times each action has been chosen
-
-    public EpsilonGreedy(double epsilon, int numActions) {
+    private final EnvironmentI environment;
+    public EpsilonGreedy(double epsilon, int numActions, EnvironmentI environment) {
         this.epsilon = epsilon;
         this.numActions = numActions;
         this.avgRewards = new double[numActions]; // Initialize average rewards to 0
         this.actionCounts = new int[numActions]; // Initialize action counts to 0
+        this.environment = environment;
     }
 
     /**
@@ -68,25 +69,25 @@ public class EpsilonGreedy {
     }
 
     /**
-     * Simulates the environment (for demonstration purposes).
+     * Interacts with environment.
      *
      * @param action The action taken.
      * @return The reward for the action.
      */
     public double getReward(int action) {
-        // Simulate rewards for each action (e.g., action 0 has a mean reward of 1.0, action 1 has 2.0, etc.)
-        double[] trueRewards = {1.0, 2.0, 1.5};
-        return trueRewards[action] + random.nextGaussian() * 0.1; // Add some noise
+        
+    	return environment.interact(action);
+    	
     }
 
     public static void main(String[] args) {
         // Parameters
         double epsilon = 0.1; // Exploration probability
-        int numActions = 3; // Number of possible actions
+        int numActions = 2; // Number of possible actions
         int numSteps = 1000; // Number of steps to run the algorithm
 
         // Initialize the ε-greedy algorithm
-        EpsilonGreedy epsilonGreedy = new EpsilonGreedy(epsilon, numActions);
+        EpsilonGreedy epsilonGreedy = new EpsilonGreedy(epsilon, numActions, new SimpleEnvironment(new double[]{.4,.05}) );
 
         // Run the algorithm
         for (int step = 1; step <= numSteps; step++) {

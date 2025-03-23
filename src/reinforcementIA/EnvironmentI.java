@@ -10,5 +10,6 @@ public interface EnvironmentI {
 	 * @return The reward: 1 with probability p(a), otherwise 0.
 	 */
 	int interact(int action, double probability);
+	int interact(int action);
 
 }

@@ -5,6 +5,10 @@ public class SimpleEnvironment implements EnvironmentI  {
 
     private static final Random random = new Random();
 
+    private final double probabilityPerAction[];
+    public SimpleEnvironment(double probabilityPerAction[]) {
+    	this.probabilityPerAction = probabilityPerAction;
+    }
     /**
      * Simulates the environment.
      *
@@ -24,19 +28,15 @@ public class SimpleEnvironment implements EnvironmentI  {
             return 0;
         }
     }
-
-    public static void main(String[] args) {
-        // Example usage
-        int action = 2; // Example action
-        double probability = 0.7; // Probability of reward for the action
-        EnvironmentI environment = new SimpleEnvironment();
-
-        // Simulate the environment
-        int reward = environment.interact(action, probability);
-
-        // Print the result
-        System.out.println("Action: " + action);
-        System.out.println("Probability: " + probability);
-        System.out.println("Reward: " + reward);
+    
+    @Override
+	public int interact(int a) {
+    	try {
+    		return interact(a,probabilityPerAction[a]);
+    	} catch (Exception e) {
+    		return 0;
+    	}
     }
+
+    
 }
